@@ -8,7 +8,6 @@ function TestHomePage() {
     const [query, setQuery] = useState('')
     const [numTweets, setNumTweets] = useState('')
 
-
     const handleQueryChange = event => {
       setQuery(event.target.value)
     }
@@ -18,7 +17,7 @@ function TestHomePage() {
     }
 
     const handleSubmit = event =>{
-      event.preventDefault();
+
 
       //need to change the url
       const url = 'localhost:3000/filler'
