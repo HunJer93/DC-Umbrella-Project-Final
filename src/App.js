@@ -12,7 +12,7 @@ function App() {
     <div>
       <Navbar />
       <div>
-        <img src={require('./images/filler.jpg')} width={200} height={200} />
+        <img src={require('./images/Poll_Logo.gif')} width={400} height={400} />
       </div>
       <br/>
       <button className="btn btn-success" onClick={() => navigate('/homepage')}>
