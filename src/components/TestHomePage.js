@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import Navbar from './Navbar';
@@ -7,14 +7,58 @@ function TestHomePage() {
     const navigate = useNavigate()
     const [query, setQuery] = useState('')
     const [numTweets, setNumTweets] = useState('')
+    const [error, setError] = useState(false)
+    const [errorQuery, setErrorQuery] = useState(false)
+    const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error;
+
+
+    //font change for error handling
+    function style(error) {
+      if (error) {
+        return {
+          backgroundColor: "rgba(255, 0, 0, 0.5)" 
+          // Or any other style you prefer
+        };
+      }
+    }
+
+    const ref = useRef();
 
     const handleQueryChange = event => {
       setQuery(event.target.value)
     }
 
     const handleNumTweetsChange = event => {
+      const newValueIsValid = !event.target.validity.patternMismatch;
+      if (error){
+        if (newValueIsValid){
+          setError(false)
+        }
+      }
       setNumTweets(event.target.value)
     }
+
+    //blur for numTweet input
+    const handleBlur = (event) => {
+      if (!error){
+        if (event.target.validity.patternMismatch) {
+          ref.current.focus();
+          setError(true);
+          //clear value of numTweet
+          setNumTweets("")
+        }
+      }    
+    };
+
+    //blur for Query input
+    const handleQueryBlur = (event) => {
+      if (!errorQuery){
+        if (query.length < 0) {
+          ref.current.focus();
+          setErrorQuery(true);
+        }
+      }    
+    };
 
     const handleSubmit = event =>{
 
@@ -35,7 +79,7 @@ function TestHomePage() {
       navigate('/graphPage')
     
       //handle the payload
-      alert(`Your state values: \n
+      console.log(`Twitter Query being processed: \n
               query: ${query} \n
               numTweets: ${numTweets}`)
     }
@@ -56,22 +100,35 @@ function TestHomePage() {
                   type="query"
                   name="query"
                   placeholder="Enter your search here..."
+                  onBlur={handleQueryBlur}
                   onChange={handleQueryChange}
+                  pattern="."
+                  ref={ref}
+                  style={style(errorQuery)}
                   value={query}
                 />
+                {/* display error banner */}
+                {errorQuery && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please do not leave query field blank</p>)}
                 <p>Please enter a number of Tweets up to 5000</p>
                 <label className="font-weight-bold"># of Tweets </label>
                 <br/>
                 <input 
                   type="numTweets"
                   name="numTweets"
+                  inputMode="decimal"
                   placeholder="Enter # of Tweets here..."
+                  onBlur={handleBlur}
                   onChange={handleNumTweetsChange}
+                  pattern="[-]?[0-9]*[.,]?[0-9]+" //regex for input validation
+                  ref={ref}
+                  style={style(error)}
                   value={numTweets}
                 />
+                {/* display error banner */}
+                {error && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please make sure you've entered a <em>number</em></p>)}
                 <br />
                 <br />
-                <button className='btn btn-success font-weight-bold' onClick={() => handleSubmit()}
+                <button className='btn btn-success font-weight-bold' disabled={!isButtonEnabled} onClick={() => handleSubmit()}
                         >Start Search
                 </button>
             </p>
