@@ -9,7 +9,7 @@ function TestHomePage() {
     const [numTweets, setNumTweets] = useState('')
     const [error, setError] = useState(false)
     const [errorQuery, setErrorQuery] = useState(false)
-    const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error;
+    const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error && parseInt(numTweets) <= 5000;
 
 
     //font change for error handling
@@ -125,7 +125,7 @@ function TestHomePage() {
                   value={numTweets}
                 />
                 {/* display error banner */}
-                {error && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please make sure you've entered a <em>number</em></p>)}
+                {error && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please make sure you've entered a <em>number</em> between 1 and 5000</p>)}
                 <br />
                 <br />
                 <button className='btn btn-success font-weight-bold' disabled={!isButtonEnabled} onClick={() => handleSubmit()}

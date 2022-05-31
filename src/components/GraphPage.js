@@ -2,10 +2,57 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import Navbar from './Navbar';
+import Chart from "react-apexcharts";
 
 function GraphPage() {
     //change these to sentiment payload values below
     const [totalReactPackages, setTotalReactPackages] = useState(null);
+    const [sentimentChart, setSentimentChart] = useState({
+        options: {
+            colors:[ "#0fc2f5", "#f72014", "#c7cdcf"],
+            chart: {
+              id: "sentiment-analysis-graph"
+            },
+            xaxis: {
+              categories: ["Total Sentiment"]
+            }
+          },
+          series: [
+            {
+              name: "Positive Sentiment",
+              data: [40]
+            },
+            {
+                name: "Negative Sentiment",
+                data: [60]
+            },
+            {
+                name: "Neutral Sentiment",
+                data: [60]
+            }
+          ]
+        });
+    const [weightedSentimentChart, setWeightedSentimentChart] = useState({
+        series: [44, 55, 13],
+        options: {
+          colors:[ "#0fc2f5", "#f72014", "#c7cdcf"],
+          chart: {
+            width: 380,
+            type: 'pie',
+          },
+          labels: ['Positive', 'Negative', 'Neutral'],
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }]
+        }});
     //uncomment these when ready to use AWS and values
 
     // const [payloadText, setPayloadText] = useState(null);
@@ -55,21 +102,35 @@ function GraphPage() {
   return (
     <>
     <Navbar />
-        <div className='card'>
-            <h1>Search Results</h1>
-            <div>Total react packages {totalReactPackages}</div>
-            <ul className="list-group list-group-flush">
-                <li className='list-group-item'>
-                    Sentiment Analysis
-                </li>
-                <li className='list-group-item'>
-                    Sentiment with Retweet Weight
-                </li>
-                <li className='list-group-item'>
-                    Wordcloud
-                </li>
-            </ul>
-        </div>
+        <h1>Search Results</h1>
+        <div>Total react packages {totalReactPackages}</div>
+        <ul className="list-group list-group-flush">
+            <li className='list-group-item'>
+                <h2>Sentiment Analysis</h2>
+                <div className="col-4">
+                    <Chart
+                        options={sentimentChart.options}
+                        series={sentimentChart.series}
+                        type="bar"
+                        width="500"
+                    />
+                </div>
+            </li>
+            <li className='list-group-item'>
+            <h2>Weighted Sentiment Analysis</h2>
+                <div className="col-4">
+                    <Chart
+                        options={weightedSentimentChart.options}
+                        series={weightedSentimentChart.series}
+                        type="pie"
+                        width="500"
+                    />
+                </div>
+            </li>
+            <li className='list-group-item'>
+                Wordcloud
+            </li>
+        </ul>
         <button className="btn btn-success" onClick={() => navigate('/')}>
             Return Home
         </button> |{" "}
