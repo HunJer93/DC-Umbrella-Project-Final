@@ -64,9 +64,9 @@ function TestHomePage() {
 
 
       //need to change the url
-      const url = 'localhost:3000/filler'
+      const url = 'https://p84bytiufk.execute-api.us-east-1.amazonaws.com'
       const payload = {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ query, numTweets })
       };

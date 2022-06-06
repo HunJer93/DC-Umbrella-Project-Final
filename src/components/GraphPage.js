@@ -68,7 +68,7 @@ function GraphPage() {
     useEffect(() => {
         // GET request using fetch inside useEffect React hook
         //will need to change the address to database API Gateway address
-        fetch('https://api.npms.io/v2/search?q=react')
+        fetch('https://p84bytiufk.execute-api.us-east-1.amazonaws.com')
             .then(async response => {
                 const data = await response.json()
 
@@ -105,9 +105,11 @@ function GraphPage() {
         <h1>Search Results</h1>
         <div>Total react packages {totalReactPackages}</div>
         <ul className="list-group list-group-flush">
-            <li className='list-group-item'>
-                <h2>Sentiment Analysis</h2>
-                <div className="col-4">
+          <div className="d-flex justify-content-center">
+            <div className="d-flex flex-row">
+            <li className='list-group-item p-2'>
+                <div className="col-4" >
+                <h3>Sentiment Analysis</h3>
                     <Chart
                         options={sentimentChart.options}
                         series={sentimentChart.series}
@@ -116,9 +118,9 @@ function GraphPage() {
                     />
                 </div>
             </li>
-            <li className='list-group-item'>
-            <h2>Weighted Sentiment Analysis</h2>
+            <li className='list-group-item p-2'>
                 <div className="col-4">
+                <h3 className="">Weighted Sentiment Analysis</h3>
                     <Chart
                         options={weightedSentimentChart.options}
                         series={weightedSentimentChart.series}
@@ -127,8 +129,10 @@ function GraphPage() {
                     />
                 </div>
             </li>
-            <li className='list-group-item'>
-                Wordcloud
+            </div>
+          </div>
+            <li className='list-group-item d-flex justify-content-center'>
+                <h3>What People Said</h3>
             </li>
         </ul>
         <button className="btn btn-success" onClick={() => navigate('/')}>
