@@ -68,7 +68,7 @@ function GraphPage() {
     useEffect(() => {
         // GET request using fetch inside useEffect React hook
         //will need to change the address to database API Gateway address
-        fetch('https://p84bytiufk.execute-api.us-east-1.amazonaws.com')
+        fetch('https://aijt73z8w9.execute-api.us-east-1.amazonaws.com/v1/{user_query_number}')
             .then(async response => {
                 const data = await response.json()
 

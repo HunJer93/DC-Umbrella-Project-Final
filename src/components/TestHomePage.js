@@ -9,7 +9,7 @@ function TestHomePage() {
     const [numTweets, setNumTweets] = useState('')
     const [error, setError] = useState(false)
     const [errorQuery, setErrorQuery] = useState(false)
-    const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error && parseInt(numTweets) <= 5000;
+    const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error && parseInt(numTweets) <= 30;
 
 
     //font change for error handling
@@ -64,9 +64,9 @@ function TestHomePage() {
 
 
       //need to change the url
-      const url = 'https://p84bytiufk.execute-api.us-east-1.amazonaws.com'
+      const url = 'https://aijt73z8w9.execute-api.us-east-1.amazonaws.com/v1'
       const payload = {
-        method: 'PUT',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ query, numTweets })
       };
@@ -109,7 +109,7 @@ function TestHomePage() {
                 />
                 {/* display error banner */}
                 {errorQuery && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please do not leave query field blank</p>)}
-                <p>Please enter a number of Tweets up to 5000</p>
+                <p>Please enter a number of Tweets up to 30</p>
                 <label className="font-weight-bold"># of Tweets </label>
                 <br/>
                 <input 
@@ -125,7 +125,7 @@ function TestHomePage() {
                   value={numTweets}
                 />
                 {/* display error banner */}
-                {error && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please make sure you've entered a <em>number</em> between 1 and 5000</p>)}
+                {error && (<p role="alert" style={{ color: "rgb(255, 0, 0)" }}>Please make sure you've entered a <em>number</em> between 1 and 30</p>)}
                 <br />
                 <br />
                 <button className='btn btn-success font-weight-bold' disabled={!isButtonEnabled} onClick={() => handleSubmit()}
