@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import Navbar from './Navbar';
@@ -9,7 +9,16 @@ function TestHomePage() {
     const [numTweets, setNumTweets] = useState('')
     const [error, setError] = useState(false)
     const [errorQuery, setErrorQuery] = useState(false)
+    const [userQueryId, setUserQueryId] = useState()
     const isButtonEnabled = query.length > 0 && numTweets.length > 0 && !error && parseInt(numTweets) <= 30;
+
+    useEffect(() =>{
+      if (typeof userQueryId != 'undefined')
+      {
+        navigateToGraphPage();
+      }
+
+    }, [userQueryId]);
 
 
     //font change for error handling
@@ -60,10 +69,15 @@ function TestHomePage() {
       }    
     };
 
-    const handleSubmit = event =>{
+    const navigateToGraphPage = () => {
 
+      console.log(`user query id in navigateToGraphPage: ${userQueryId}`);
+      //used to navigate pages
+      navigate(`/graphPage?userQueryId=${userQueryId}`)
+    }
 
-      //need to change the url
+    const handleSubmit = () =>{
+
       const url = 'https://aijt73z8w9.execute-api.us-east-1.amazonaws.com/v1'
       const payload = {
         method: 'POST',
@@ -72,17 +86,16 @@ function TestHomePage() {
       };
 
       fetch(url, payload)
-        .then(Response = console.log('Submitted successfully'))
+        .then(response => response.json())
+        .then(response => setUserQueryId(response.user_query_id))
         .catch(error => console.log('Form submit error', error))
-
-      //used to navigate pages
-      navigate('/graphPage')
     
       //handle the payload
       console.log(`Twitter Query being processed: \n
               query: ${query} \n
-              numTweets: ${numTweets}`)
+              numTweets: ${numTweets}`);
     }
+  
   return (
     <>
     <Navbar />
