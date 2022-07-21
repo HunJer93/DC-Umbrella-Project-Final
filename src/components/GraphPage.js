@@ -9,6 +9,8 @@ function GraphPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [userQueryId, setUserQueryId] = useState(searchParams.get('userQueryId'));
 
+  //this is a new comment
+
 
   //change these to sentiment payload values below
   const [positiveSentiment, setPositiveSentiment] = useState([]);
@@ -180,7 +182,7 @@ function GraphPage() {
             .catch(error =>{
                 setErrorMessage(error.toString());
                 console.error('There was an error!', error);
-            }); }, 7000);
+            }); }, 2000);
 
     
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
