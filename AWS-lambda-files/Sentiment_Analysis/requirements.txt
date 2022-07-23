@@ -1,0 +1,4 @@
+textblob==0.17.1
+pandas==1.4.1
+numpy==1.22.3
+regex==2022.4.24
