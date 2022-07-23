@@ -1,4 +1,4 @@
-# Welcome to the HunJer93.github.io wiki! 
+# Welcome to my Umbrella Project! 
 
 ## Project Purpose
 This project was my Umbrella Project through the [Develop Carolina](https://www.developcarolina.org/) fellowship program that began January 10th, 2022 and concluded June 27th, 2022. The purpose of the project was for me to better understand full-stack development and to learn more about AWS web services. 
